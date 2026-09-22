@@ -1,0 +1,8 @@
+{
+  "name": "smartvat",
+  "version": "1.0.0",
+  "description": "Smart VAT chaincode: nine functions from Table 2 of the manuscript",
+  "main": "index.js",
+  "scripts": { "start": "fabric-chaincode-node start", "server": "fabric-chaincode-node server" },
+  "dependencies": { "fabric-contract-api": "~2.5.4", "fabric-shim": "~2.5.4" }
+}

@@ -1,0 +1,85 @@
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: __ORG__/ordererOrganizations/vat.example.com/msp
+    Policies:
+      Readers: {Type: Signature, Rule: "OR('OrdererMSP.member')"}
+      Writers: {Type: Signature, Rule: "OR('OrdererMSP.member')"}
+      Admins: {Type: Signature, Rule: "OR('OrdererMSP.admin')"}
+    OrdererEndpoints: [localhost:7050]
+  - &TaxAuthority
+    Name: TaxAuthorityMSP
+    ID: TaxAuthorityMSP
+    MSPDir: __ORG__/peerOrganizations/ta.vat.example.com/msp
+    Policies:
+      Readers: {Type: Signature, Rule: "OR('TaxAuthorityMSP.admin','TaxAuthorityMSP.peer','TaxAuthorityMSP.client')"}
+      Writers: {Type: Signature, Rule: "OR('TaxAuthorityMSP.admin','TaxAuthorityMSP.client')"}
+      Admins: {Type: Signature, Rule: "OR('TaxAuthorityMSP.admin')"}
+      Endorsement: {Type: Signature, Rule: "OR('TaxAuthorityMSP.peer')"}
+    AnchorPeers: [{Host: localhost, Port: 7051}]
+  - &VEP
+    Name: VEPMSP
+    ID: VEPMSP
+    MSPDir: __ORG__/peerOrganizations/vep.vat.example.com/msp
+    Policies:
+      Readers: {Type: Signature, Rule: "OR('VEPMSP.admin','VEPMSP.peer','VEPMSP.client')"}
+      Writers: {Type: Signature, Rule: "OR('VEPMSP.admin','VEPMSP.client')"}
+      Admins: {Type: Signature, Rule: "OR('VEPMSP.admin')"}
+      Endorsement: {Type: Signature, Rule: "OR('VEPMSP.peer')"}
+    AnchorPeers: [{Host: localhost, Port: 8051}]
+  - &Bank
+    Name: BankMSP
+    ID: BankMSP
+    MSPDir: __ORG__/peerOrganizations/bank.vat.example.com/msp
+    Policies:
+      Readers: {Type: Signature, Rule: "OR('BankMSP.admin','BankMSP.peer','BankMSP.client')"}
+      Writers: {Type: Signature, Rule: "OR('BankMSP.admin','BankMSP.client')"}
+      Admins: {Type: Signature, Rule: "OR('BankMSP.admin')"}
+      Endorsement: {Type: Signature, Rule: "OR('BankMSP.peer')"}
+Capabilities:
+  Channel: &ChannelCapabilities {V2_0: true}
+  Orderer: &OrdererCapabilities {V2_0: true}
+  Application: &ApplicationCapabilities {V2_5: true}
+Application: &ApplicationDefaults
+  Organizations:
+  Policies:
+    Readers: {Type: ImplicitMeta, Rule: "ANY Readers"}
+    Writers: {Type: ImplicitMeta, Rule: "ANY Writers"}
+    Admins: {Type: ImplicitMeta, Rule: "MAJORITY Admins"}
+    LifecycleEndorsement: {Type: ImplicitMeta, Rule: "MAJORITY Endorsement"}
+    Endorsement: {Type: ImplicitMeta, Rule: "MAJORITY Endorsement"}
+  Capabilities: *ApplicationCapabilities
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft
+  Addresses: [localhost:7050]
+  EtcdRaft:
+    Consenters:
+      - Host: localhost
+        Port: 7050
+        ClientTLSCert: __ORG__/ordererOrganizations/vat.example.com/orderers/orderer.vat.example.com/tls/server.crt
+        ServerTLSCert: __ORG__/ordererOrganizations/vat.example.com/orderers/orderer.vat.example.com/tls/server.crt
+  BatchTimeout: 2s
+  BatchSize: {MaxMessageCount: 10, AbsoluteMaxBytes: 99 MB, PreferredMaxBytes: 512 KB}
+  Organizations:
+  Policies:
+    Readers: {Type: ImplicitMeta, Rule: "ANY Readers"}
+    Writers: {Type: ImplicitMeta, Rule: "ANY Writers"}
+    Admins: {Type: ImplicitMeta, Rule: "MAJORITY Admins"}
+    BlockValidation: {Type: ImplicitMeta, Rule: "ANY Writers"}
+  Capabilities: *OrdererCapabilities
+Channel: &ChannelDefaults
+  Policies:
+    Readers: {Type: ImplicitMeta, Rule: "ANY Readers"}
+    Writers: {Type: ImplicitMeta, Rule: "ANY Writers"}
+    Admins: {Type: ImplicitMeta, Rule: "MAJORITY Admins"}
+  Capabilities: *ChannelCapabilities
+Profiles:
+  VatChannel:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations: [*OrdererOrg]
+    Application:
+      <<: *ApplicationDefaults
+      Organizations: [*TaxAuthority, *VEP, *Bank]

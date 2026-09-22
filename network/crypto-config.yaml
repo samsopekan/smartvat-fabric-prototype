@@ -1,0 +1,23 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: vat.example.com
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: orderer
+        SANS: [localhost, 127.0.0.1]
+PeerOrgs:
+  - Name: TaxAuthority
+    Domain: ta.vat.example.com
+    EnableNodeOUs: true
+    Template: {Count: 1, SANS: [localhost, 127.0.0.1]}
+    Users: {Count: 1}
+  - Name: VEP
+    Domain: vep.vat.example.com
+    EnableNodeOUs: true
+    Template: {Count: 1, SANS: [localhost, 127.0.0.1]}
+    Users: {Count: 2}
+  - Name: Bank
+    Domain: bank.vat.example.com
+    EnableNodeOUs: true
+    Template: {Count: 1, SANS: [localhost, 127.0.0.1]}
+    Users: {Count: 1}

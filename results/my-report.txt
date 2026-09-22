@@ -1,0 +1,26 @@
+run muadja0p  2026-09-20T22:14:36.600Z -> 2026-09-20T22:23:49.398Z
+
+Sequential, one transaction in flight (ms), n=30
+function            endorse mean  total mean   median     p95     max
+addVEP                      12.9        2060     2062    2075    2078
+buyCoin                     15.2        2063     2065    2074    2093
+addInforInvoice             15.4        2064     2064    2077    2078
+agreeFromBVEP               14.0        2064     2062    2080    2087
+agreeFromSVEP               20.6        2070     2072    2081    2083
+requestForPNVR              17.9        2065     2065    2078    2102
+disagreePNVR                12.6        2058     2060    2072    2072
+agreePNVR                   12.8        2061     2063    2074    2075
+getInforPNVR                 7.0           7        7       9      12
+
+Concurrent bursts (ms, tx/s)
+addVEP            in flight 20    mean 161  p95 168  burst throughput 113.6 tx/s
+buyCoin           in flight 20    mean 154  p95 167  burst throughput 114.3 tx/s
+addInforInvoice   in flight 20    mean 163  p95 198  burst throughput 113.0 tx/s
+agreeFromBVEP     in flight 20    mean 144  p95 205  burst throughput 129.6 tx/s
+agreeFromSVEP     in flight 10    mean 95  p95 103  burst throughput 101.2 tx/s
+
+requestForPNVR endorsement time by invoices in the filing period (ms)
+   10 invoices: mean 14.4  max 16.2
+   50 invoices: mean 14.6  max 15.2
+  100 invoices: mean 18.7  max 26.9
+  200 invoices: mean 28.9  max 69.0

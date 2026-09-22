@@ -1,0 +1,13 @@
+S1: value NGN 2,000,000  VAT NGN 150,000  status CONFIRMED
+S2: value NGN 1,200,000  VAT NGN 90,000  status CONFIRMED
+S3: value NGN 800,000  VAT NGN 60,000  status CONFIRMED
+P1: value NGN 1,000,000  VAT NGN 75,000  status CONFIRMED
+P2: value NGN 600,000  VAT NGN 45,000  status CONFIRMED
+requestForPNVR: output NGN 300,000  input NGN 120,000  PNVR NGN 180,000
+equation (1): honest MVP NGN 180,000; MVP with S3 omitted NGN 120,000
+agreePNVR with under-declared MVP -> rejected by chaincode
+disagreePNVR: status DISPUTED  divergence NGN 60,000
+trace: invoice S3-muadamn4 VAT NGN 60,000 seller TIN-A-muadamn4 buyer TIN-B-muadamn4 hash 7198c3b98f6069b8...
+agreePNVR with honest MVP: status AGREED
+bank getInforPNVR: {"tin":"TIN-A-muadamn4","period":"2026-09-muadamn4","outputVat":30000000,"inputVat":12000000,"pnvr":18000000,"salesInvoices":3,"purchaseInvoices":2,"status":"AGREED","declaredMvp":18000000}
+VEP calling getInforPNVR -> rejected (BankMSP required)
