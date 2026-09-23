@@ -2,6 +2,9 @@ cff-version: 1.2.0
 title: "Smart VAT prototype: Hyperledger Fabric chaincode, test network and benchmark"
 version: v1.0.0
 license: Apache-2.0
+date-released: 2026-09-22
+doi: 10.5281/zenodo.22905978
+repository-code: "https://github.com/samsopekan/smartvat-fabric-prototype"
 message: "If you use this software, please cite it as below."
 authors:
   - family-names: Sopekan
