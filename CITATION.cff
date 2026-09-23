@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "Smart VAT prototype: Hyperledger Fabric chaincode, test network and benchmark"
+version: v1.0.0
+license: Apache-2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Sopekan
+    given-names: Samuel Adeyemi
+    affiliation: University of Lagos
+    orcid: "https://orcid.org/0000-0002-4579-7661"  
