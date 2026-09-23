@@ -1,5 +1,5 @@
 # Smart VAT prototype: chaincode, test network and latency benchmark
-
+[![DOI](https://zenodo.org/badge/1382394700.svg)](https://doi.org/10.5281/zenodo.22905978)
 This kit implements the nine smart-contract functions in Table 2 of the manuscript as Hyperledger Fabric chaincode,
 starts a small Fabric 2.5 test network, replays the illustrative scenario of Table 3 and measures latency.
 
